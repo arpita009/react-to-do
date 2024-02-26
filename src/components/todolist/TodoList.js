@@ -1,17 +1,17 @@
 import Todo from '../todo/Todo';
+import {useContext} from 'react';
+import TodoContext from '../../context/TodoContext';
 
-export default function TodoList({todos, onDeleteTodo, onStatusChange, onEditTodo}) {
+export default function TodoList() {
+    const {todos, setTodosArr} = useContext(TodoContext);
     return(
         <ul>
-            {todos.map(todo =>
+            { todos && todos.map(todo =>
                 (<li key={todo.id}>
                     <Todo
                         id={todo.id}
                         text={todo.text}
                         isFinished={todo.isFinished}
-                        onDeleteTodo={onDeleteTodo}
-                        onStatusChange={onStatusChange}
-                        onEditTodo={onEditTodo}
                     />
                 </li>)
             )}

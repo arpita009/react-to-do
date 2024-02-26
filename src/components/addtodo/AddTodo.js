@@ -1,9 +1,13 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
+import TodoContext from '../../context/TodoContext';
 
-export default function AddTodo({onAddTodo}) {
+export default function AddTodo() {
+    const {todos,setTodosArr} = useContext(TodoContext);
     const [newTodo, setNewTodo] = useState('');
     const submitTodo =() => {
-        onAddTodo(newTodo);
+        // onAddTodo(newTodo);
+        const nextId = todos.length +1;
+        setTodosArr([...todos, {id: nextId, text: newTodo, isFinished: false}]);
         setNewTodo('');
     }
     return (

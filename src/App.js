@@ -2,6 +2,7 @@ import './App.css';
 import TodoList from './components/todolist/TodoList';
 import AddTodo from './components/addtodo/AddTodo';
 import {useState} from "react";
+import TodoContext from './context/TodoContext';
 
 function App() {
     const dos = [
@@ -11,46 +12,24 @@ function App() {
     ];
     const [todos, setTodos] = useState(dos);
 
-    const addNewTodo =(text) => {
-        const nextId = todos.length +1;
-        setTodos([...todos, {id: nextId, text: text, isFinished: false}]);
-    }
-
-    const deleteTodo =(id) => {
-        const remainingTodos = todos.filter(todo => todo.id !== id);
-        setTodos(remainingTodos);
-    }
-
-    const statusFinished = (id) => {
-        const updatedTodos = todos.map(todo => {
-            if (todo.id === id) {
-                return { ...todo, isFinished: !todo.isFinished };
-            }
-            return todo; // Return unchanged todo if id doesn't match
-        });
-        setTodos(updatedTodos);
-    }
-
-    const editTodo = (id, newText) => {
-        const editedTodos = todos.map(todo => {
-            if (todo.id ===id) {
-                return {...todo, text: newText}
-            }
-            return todo;
-        })
-        setTodos(editedTodos);
+    const setTodosArr =(arr) => {
+        setTodos(arr);
     }
 
 
     return (
     <div className="App">
         <h1 className='center-align'>Nice To-do App</h1>
-        <AddTodo onAddTodo ={addNewTodo} />
-        <TodoList todos={todos}
-                  onDeleteTodo ={deleteTodo}
-                  onStatusChange ={statusFinished}
-                  onEditTodo={editTodo}
-        />
+        <TodoContext.Provider value={{todos, setTodosArr}}>
+            <AddTodo />
+            <TodoList />
+            {/*<AddTodo onAddTodo ={addNewTodo} />*/}
+            {/*<TodoList todos={todos}*/}
+            {/*          onDeleteTodo ={deleteTodo}*/}
+            {/*          onStatusChange ={statusFinished}*/}
+            {/*          onEditTodo={editTodo}*/}
+            {/*/>*/}
+        </TodoContext.Provider>
     </div>
   );
 }
