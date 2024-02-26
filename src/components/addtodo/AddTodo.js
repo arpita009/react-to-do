@@ -2,12 +2,12 @@ import {useState, useContext} from 'react';
 import TodoContext from '../../context/TodoContext';
 
 export default function AddTodo() {
-    const {todos,setTodosArr} = useContext(TodoContext);
+    const {todos,dispatch} = useContext(TodoContext);
     const [newTodo, setNewTodo] = useState('');
     const submitTodo =() => {
-        // onAddTodo(newTodo);
         const nextId = todos.length +1;
-        setTodosArr([...todos, {id: nextId, text: newTodo, isFinished: false}]);
+        // setTodosArr([...todos, {id: nextId, text: newTodo, isFinished: false}]);
+        dispatch({type: 'add_todo', payload: {newTodo}});
         setNewTodo('');
     }
     return (
